@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block body %}
+<h2>Login</h2>
+
+    {% if message %}
+        <div class='errorMsg'>{{ message }}</div>
+    {% endif %}
+
+    <div id='dinamicBody' class='margenes'>
+        <form action="{% url 'user:login' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn btn-primary" type="submit" value="Login">
+        </form>
+    </div>
+        {% comment %} <a id='ss' hidden>{{stt}}</a> {% endcomment %}
+
+{% endblock body %}

@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang='es'>
+    <head>
+        <title>{% block title %} {% endblock %} </title>
+
+        <link type='image/x-icon' href="{% static 'favicon.ico' %}" rel='shortcut icon' >
+
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        {% block script %}{% endblock script %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="">Empresa</a>    {% comment %} {% url 'empresa:empresa' %} {% endcomment %}
+            <div>
+                <ul class="navbar-nav mr-auto">
+                    {% if user.is_authenticated %}
+                        <li id='us{{user.id}}' class="nav-item">
+                            <a id='navtie' class="nav-link shopList" href="{% url 'index' %}"><strong>{{ user.username }}</strong></a>
+                        </li>
+                        <li id='dropdown' class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="False">
+                                Crear
+                            </a>
+                            <div id='menu' class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div id='menu1'>
+                                    <a class="dropdown-item" href="">Nuevo Departamento</a>         {% comment %} {% url 'empresa:nuevoDepartamento' %} {% endcomment %}
+                                    <hr>
+                                </div>
+                                <div id='menu2'>
+                                    <a id='newPro' class="dropdown-item" href="">Nuevo Producto</a>     {% comment %} {% url 'producto:nuevoProducto' %} {% endcomment %}
+                                    <a id='newCli' class="dropdown-item" href="">Nuevo Cliente</a>      {% comment %} {% url 'cliente:nuevoCliente' %} {% endcomment %}
+                                    <a id='newCot' class="dropdown-item" href="">Nueva Cotización</a>           {% comment %} {% url 'cotizacion:nuevaCotizacion' %} {% endcomment %}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a id='navout' class="nav-link btn-outline-danger shopList" href="{% url 'user:logout' %}">Log Out</a>
+                        </li><br>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user:login' %}">Ingresar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user:register' %}">Registrarse</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+            <footer class="blockquote-footer fixed-bottom">
+                <small>Programa Muestra: 'Funcionamiento de una empresa'. Developed by: Marco Camarillo. Xalapa, Veracruz, Mexico. Octubre 2025.</small>
+            </footer>
+        </div>
+
+    </body>
+</html>
+

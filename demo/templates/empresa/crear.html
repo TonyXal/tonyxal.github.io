@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block script %}
+    <script src='{% static "js/crear.js" %}'></script>
+{% endblock script %}
+
+
+{% block body %}
+    <div id='staticHeader' class='margenes'>
+        <h2>Registro de la nueva empresa.</h2>
+    </div>
+
+    <div id='dinamicBody' class='margenes'>
+        <div id='createShop'>
+            {% if exists %}
+                <div id='checkShop' class='margenes'>
+                    <h3>Bienvenido(a) <i>{{ user.username }}</i></h3>
+                    <h4>Ya fue creada la empresa <q>{{ empresa.nombre }}</q>.</h4>
+                    <h5>No puedes crear otra empresa.</h5>
+                    <br><br>
+                    <div class='margenes'>
+                        <h5>Datos de la Empresa</h5>
+                        <p>Empresa: {{empresa.nombre}}</p>
+                        <p>Descripción: {{empresa.descripcion}}</p>
+                        <p>Fecha creación: {{empresa.fecha}}</p>
+                        <p>Estatus: {{empresa.abierto}}</p>
+                    </div>
+                    <a href="{% url 'user:index' %}">Regresar</a>
+                </div>
+            {% else %}
+                <div id='checkShop' class='margenes'>
+                    <h3>Bienvenido(a) <i>{{ user.username }}</i></h3>
+                    <h4>Inicia creando una <a style='color:blue'>"Nueva Empresa"</a>.</h4>
+                    <h6>Tu serás el gerente de esta empresa.</h6>
+                    <form class='margenes' action="{% url 'empresa:nuevaempresa' %}" method='post'>
+                        <div class='column2'>
+                            {% csrf_token %}
+                            {% if message %}
+                                <div class='errorMsg'><b>{{message}}</b></div>
+                            {% endif %}
+                            <div class='column2'>
+                                <div class='column1'>
+                                    {{ form1 }}
+                                </div>                                
+                                <div class='column1'>
+                                    {{ form2 }}
+                                </div>
+                            </div>
+                            <a>
+                                {% if message3 %}
+                                    <div class='errorMsg'><b>{{message3}}</b></div>
+                                {% endif %}
+                            </a>
+                        </div><br>
+                        <input class="btn btn-primary" type="submit" value="Registrar Empresa">
+                        {% comment %} <a id='cancel' class="btn btn-danger" href="{% url 'index' %}">Cancel</a> {% endcomment %}
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+
+        <div id='openShop' class='margenes'>
+            <div class='margenes'>
+                <a>ID: <b id='empID'>{{user.id}}</b> </a>
+                <a>Administrador : <b id='empleado'>{{user.username}}</b></a>
+            </div>
+            <div class='margenes'>
+                <h3>Datos de la Empresa</h3>
+                <p>Empresa: {{empresa.nombre}}</p>
+                <p>Descripción: {{empresa.descripcion}}</p>
+                <p>Fecha creación: {{empresa.fecha}}</p>
+                <p>Estatus: {{empresa.abierto}}</p>
+            </div>
+        </div>    
+    </div>
+{% endblock body %}

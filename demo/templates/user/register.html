@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block body %}
+    <h2>Register</h2>
+
+    {% if message %}
+        <div class='errorMsg'>{{ message }}</div>
+    {% endif %}
+
+    <div class='margenes'>
+        <form action="{% url 'user:register' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn btn-primary" type="submit" value="Registrar">
+        </form>
+    </div>
+
+    {% comment %} <a id='ss' hidden>{{stt}}</a> {% endcomment %}
+
+{% endblock body %}
+
+

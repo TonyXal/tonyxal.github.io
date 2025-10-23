@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block script %}
+    <script src='{% static "js/index.js" %}'></script>
+{% endblock script %}
+
+{% block body %}
+
+    <div id='staticHeader' class='margenes'>
+        {% if empresa %}
+            <h2 class='blue'>{{empresa.nombreEmp.title}} </h2>
+        {% else %}
+            <h2>Bienvenido(a) <i>{{ user.username }}</i></h2>
+        {% endif %}
+    </div>
+
+    <div id='dinamicBody' class='margenes'>
+
+        {% if empresa %}
+            <div class='margenes'>
+                <a>Usuario: <b id='user'>{{user.username}} </b></a>
+                <a>ID: <b id='userID'>{{user.id}} </b></a>
+                <a>Departamento: <b id='depto'>{{ depto }}</b></a>
+            </div>
+            <div class='margenes'>
+                <h3>Actividades</h3>
+                <br>
+                <h4>Activas</h4>
+                <h4>Cerradas</h4>
+                {% comment %} <h3 id='empresa'>{{ empresa.nombreEmp.capitalize }}</h3>
+                <a> ID: <b id='empID'>{{ empresa.id }}</b></a>
+                <a> Estatus: <b id='estatus'>{% if sessionStorage.abierto == true %}Abierto{%else%}Cerrado{%endif%}</b></a> {% endcomment %}
+            </div>
+            {% if message %}
+                <p class='errorMsg'>{{ message }}</p>
+            {% endif %}
+        {% else %}
+            <h4>Inicia creando una <a href="{% url 'empresa:nuevaempresa' %}">Nueva Empresa</a>.</h4>
+            <h6>Tu serás el gerente de esta nueva empresa.<h6>
+        {% endif %}
+        <div id='noDept' style='display:none'>
+            <h4>Gracias por registrarte, tu gerente te contactará pronto.</h4>
+        </div>
+        
+        <a id='level' hidden>{{ nivel }}</a>
+        
+        {% comment %} <div id='checkShop' class='margenes'>
+
+        </div> {% endcomment %}
+    </div>
+
+
+
+{% endblock body %}
+
+
